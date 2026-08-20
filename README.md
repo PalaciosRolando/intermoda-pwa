@@ -1,5 +1,4 @@
 # Prácticas Profesionales — Intermoda
-**Stephany Sofia Alanis Mendez**
 
 Bitácora PWA de horas de prácticas profesionales.
 
