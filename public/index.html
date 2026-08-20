@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Prácticas — Intermoda</title>
+<link rel="manifest" href="/manifest.json" />
+<meta name="theme-color" content="#1E3A8A" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="apple-mobile-web-app-title" content="Intermoda" />
+<link rel="apple-touch-icon" href="/icons/icon-192.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Nunito:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #F0F7FF;
+    --surface: #FFFFFF;
+    --blue: #60A5FA;
+    --blue-light: #DBEAFE;
+    --blue-dark: #1E3A8A;
+    --coral: #FB7185;
+    --coral-light: #FFE4E6;
+    --coral-dark: #9F1239;
+    --teal: #2DD4BF;
+    --teal-light: #CCFBF1;
+    --teal-dark: #134E4A;
+    --violet: #A78BFA;
+    --violet-light: #EDE9FE;
+    --violet-dark: #4C1D95;
+    --text: #0F172A;
+    --text2: #1E3A5F;
+    --text3: #7BA3C8;
+    --border: rgba(30,58,92,0.15);
+    --border2: rgba(30,58,92,0.25);
+    --danger: #E11D48;
+    --danger-bg: #FFF1F2;
+    --shadow: 0 2px 20px rgba(30,80,160,0.08);
+    --shadow-lg: 0 8px 40px rgba(30,80,160,0.15);
+    --radius: 16px;
+    --radius-sm: 10px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.6; -webkit-tap-highlight-color: transparent; }
+
+  body::before {
+    content: '';
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(circle at 15% 25%, rgba(96,165,250,0.12) 0%, transparent 45%),
+      radial-gradient(circle at 85% 75%, rgba(251,113,133,0.10) 0%, transparent 45%),
+      radial-gradient(circle at 50% 50%, rgba(45,212,191,0.07) 0%, transparent 55%);
+    pointer-events: none; z-index: 0;
+  }
+
+  .app { position: relative; z-index: 1; display: grid; grid-template-columns: 280px 1fr; min-height: 100vh; }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    background: linear-gradient(160deg, #BFD9F8 0%, #A8CAF0 55%, #8FBDE6 100%);
+    color: var(--blue-dark); padding: 2rem 1.5rem;
+    display: flex; flex-direction: column; gap: 1.8rem;
+    position: sticky; top: 0; height: 100vh; overflow-y: auto;
+    border-right: 1px solid rgba(30,58,92,0.15);
+    -webkit-overflow-scrolling: touch;
+  }
+  .logo-eyebrow { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(30,58,92,0.45); font-weight: 700; margin-bottom: 2px; }
+  .logo-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--blue-dark); line-height: 1.25; font-weight: 600; }
+  .logo-company { font-size: 11px; font-weight: 800; color: var(--blue-dark); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 4px; opacity: .8; }
+  .logo-name { font-family: 'Playfair Display', serif; font-size: 0.9rem; color: var(--blue-dark); font-style: italic; line-height: 1.3; margin-top: 2px; }
+
+  .welcome-chip { background: rgba(255,255,255,0.55); border-radius: 99px; padding: 7px 14px; font-size: 13px; font-weight: 700; color: var(--blue-dark); display: inline-flex; align-items: center; gap: 6px; border: 1px solid rgba(30,58,92,0.15); }
+
+  .schedule-chip { background: rgba(255,255,255,0.4); border-radius: var(--radius-sm); padding: 10px 14px; border: 1px solid rgba(30,58,92,0.12); }
+  .schedule-label { font-size: 9px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(30,58,92,0.4); margin-bottom: 3px; }
+  .schedule-time { font-family: 'DM Mono', monospace; font-size: 1.05rem; font-weight: 500; color: var(--blue-dark); }
+  .schedule-sub { font-size: 11px; color: rgba(30,58,92,0.45); margin-top: 2px; }
+
+  .sidebar-section { display: flex; flex-direction: column; gap: 4px; }
+  .sidebar-label { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(30,58,92,0.38); font-weight: 700; padding: 0 8px; margin-bottom: 2px; }
+  .month-btn { background: none; border: none; text-align: left; padding: 9px 12px; border-radius: var(--radius-sm); cursor: pointer; color: rgba(30,58,92,0.65); font-family: 'Nunito', sans-serif; font-size: 13px; display: flex; justify-content: space-between; align-items: center; transition: background 0.15s, color 0.15s; width: 100%; touch-action: manipulation; }
+  .month-btn:hover, .month-btn:active { background: rgba(255,255,255,0.35); color: var(--blue-dark); }
+  .month-btn.active { background: rgba(255,255,255,0.5); color: var(--blue-dark); font-weight: 700; }
+  .month-btn .pill { font-size: 10px; background: rgba(30,58,92,0.1); color: var(--blue-dark); padding: 2px 8px; border-radius: 99px; font-family: 'DM Mono', monospace; }
+  .month-btn.active .pill { background: rgba(30,58,92,0.18); }
+
+  .sidebar-total { margin-top: auto; padding-top: 1.5rem; border-top: 1px solid rgba(30,58,92,0.15); }
+  .total-label { font-size: 9px; color: rgba(30,58,92,0.4); margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.15em; font-weight: 700; }
+  .total-big { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--blue-dark); line-height: 1; }
+  .total-pct { font-size: 12px; color: rgba(30,58,92,0.5); margin-top: 2px; font-family: 'DM Mono', monospace; }
+  .total-sub { font-size: 11px; color: rgba(30,58,92,0.38); margin-top: 2px; }
+  .progress-outer { height: 6px; background: rgba(30,58,92,0.1); border-radius: 99px; margin-top: 10px; overflow: hidden; }
+  .progress-inner { height: 100%; background: linear-gradient(90deg, var(--blue), var(--teal)); border-radius: 99px; transition: width 0.6s ease; }
+  .goal-row { display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: rgba(255,255,255,0.35); border-radius: var(--radius-sm); margin-top: 8px; }
+  .goal-row label { font-size: 11px; color: rgba(30,58,92,0.6); flex: 1; }
+  .goal-row input { width: 60px; height: 32px; padding: 0 6px; border: 1px solid rgba(30,58,92,0.2); border-radius: 8px; font-family: 'DM Mono', monospace; font-size: 13px; background: rgba(255,255,255,0.6); color: var(--blue-dark); text-align: center; outline: none; -webkit-appearance: none; }
+  .creator-credit { font-size: 9.5px; color: rgba(30,58,92,0.28); text-align: center; font-style: italic; }
+
+  /* ── MAIN ── */
+  .main { padding: 2.5rem 2rem; max-width: 900px; }
+
+  .welcome-banner { background: linear-gradient(135deg, #DBEAFE, #EDE9FE, #CCFBF1); border-radius: var(--radius); padding: 1.2rem 1.5rem; margin-bottom: 1.8rem; display: flex; align-items: center; gap: 14px; border: 1px solid rgba(30,58,92,0.1); box-shadow: var(--shadow); }
+  .welcome-icon { font-size: 2rem; line-height: 1; }
+  .welcome-hi { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--blue-dark); font-style: italic; }
+  .welcome-name { font-size: 12px; color: var(--text3); font-weight: 600; letter-spacing: 0.05em; }
+
+  .month-name { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--text); line-height: 1.1; }
+  .month-stats { display: flex; gap: 1.5rem; margin-top: 6px; flex-wrap: wrap; margin-bottom: 1.5rem; }
+  .stat-chip { font-size: 12px; color: var(--text3); display: flex; align-items: center; gap: 5px; }
+  .stat-chip strong { color: var(--blue-dark); font-weight: 700; }
+
+  /* ── CARDS ── */
+  .summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 1rem; }
+  .summary-card { border-radius: var(--radius); padding: 1rem 1.1rem; box-shadow: var(--shadow); border: 1px solid transparent; }
+  .card-blue   { background: linear-gradient(135deg, #DBEAFE, #EFF6FF); border-color: rgba(96,165,250,0.3); }
+  .card-coral  { background: linear-gradient(135deg, #FFE4E6, #FFF1F2); border-color: rgba(251,113,133,0.3); }
+  .card-teal   { background: linear-gradient(135deg, #CCFBF1, #F0FDFA); border-color: rgba(45,212,191,0.3); }
+  .card-violet { background: linear-gradient(135deg, #EDE9FE, #F5F3FF); border-color: rgba(167,139,250,0.3); }
+  .sc-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin-bottom: 4px; }
+  .card-blue .sc-label   { color: var(--blue-dark); opacity: .7; }
+  .card-coral .sc-label  { color: var(--coral-dark); opacity: .7; }
+  .card-teal .sc-label   { color: var(--teal-dark); opacity: .8; }
+  .card-violet .sc-label { color: var(--violet-dark); opacity: .7; }
+  .sc-value { font-family: 'Playfair Display', serif; font-size: 1.8rem; line-height: 1; }
+  .card-blue .sc-value   { color: var(--blue-dark); }
+  .card-coral .sc-value  { color: var(--coral-dark); }
+  .card-teal .sc-value   { color: var(--teal-dark); }
+  .card-violet .sc-value { color: var(--violet-dark); }
+  .sc-unit { font-family: 'Nunito', sans-serif; font-size: 12px; font-weight: 400; margin-left: 2px; opacity: .7; }
+  .sc-sub { font-size: 11px; margin-top: 5px; opacity: .65; }
+
+  /* ── MINDAY ── */
+  .minday-row { display: flex; align-items: center; gap: 8px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .minday-label { font-size: 12px; color: var(--text3); }
+  .minday-row input { width: 52px; height: 32px; padding: 0 6px; border: 1px solid var(--border2); border-radius: 8px; font-family: 'DM Mono', monospace; font-size: 13px; background: var(--surface); color: var(--blue-dark); text-align: center; outline: none; -webkit-appearance: none; }
+  .minday-hint { font-size: 11px; color: var(--blue); font-weight: 700; }
+
+  /* ── FORM ── */
+  .add-section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.4rem; margin-bottom: 2rem; box-shadow: var(--shadow); }
+  .add-section h2 { font-size: 14px; font-weight: 700; color: var(--blue-dark); margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
+  .quick-fill-row { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+  .quick-label { font-size: 11px; color: var(--text3); }
+  .quick-btn { display: flex; align-items: center; gap: 5px; background: var(--blue-light); border: 1px solid rgba(96,165,250,0.4); border-radius: 99px; padding: 6px 14px; font-size: 12px; font-weight: 700; color: var(--blue-dark); cursor: pointer; font-family: 'Nunito', sans-serif; transition: all 0.15s; touch-action: manipulation; }
+  .quick-btn:hover, .quick-btn:active { background: var(--blue); color: #fff; border-color: var(--blue); }
+  .form-row-1 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+  .form-row-2 { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: end; }
+  .form-field { display: flex; flex-direction: column; gap: 5px; }
+  .form-field label { font-size: 11px; font-weight: 700; color: var(--text3); letter-spacing: 0.05em; }
+  .form-field input[type="date"],
+  .form-field input[type="time"],
+  .form-field input[type="text"] { height: 46px; padding: 0 12px; border: 1px solid var(--border2); border-radius: var(--radius-sm); font-family: 'Nunito', sans-serif; font-size: 14px; background: var(--blue-light); color: var(--text); transition: border-color 0.15s, box-shadow 0.15s; outline: none; width: 100%; -webkit-appearance: none; touch-action: manipulation; }
+  .form-field input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(96,165,250,0.18); }
+  .preview-badge { margin-top: 8px; font-size: 12px; color: var(--blue-dark); font-family: 'DM Mono', monospace; font-weight: 500; min-height: 18px; }
+  .btn-primary { height: 46px; padding: 0 22px; background: linear-gradient(135deg, var(--blue), var(--teal)); border: none; border-radius: var(--radius-sm); font-family: 'Nunito', sans-serif; font-size: 14px; font-weight: 700; color: #fff; cursor: pointer; white-space: nowrap; transition: opacity 0.15s, transform 0.1s; box-shadow: 0 2px 12px rgba(96,165,250,0.35); touch-action: manipulation; }
+  .btn-primary:hover { opacity: 0.9; }
+  .btn-primary:active { transform: scale(0.97); }
+
+  /* ── ENTRIES ── */
+  .entries-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .entries-title { font-size: 11px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.12em; }
+  .btn-export { display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: var(--blue-dark); background: var(--blue-light); border: 1px solid rgba(96,165,250,0.35); border-radius: var(--radius-sm); padding: 8px 14px; cursor: pointer; font-family: 'Nunito', sans-serif; transition: all 0.15s; touch-action: manipulation; }
+  .btn-export:hover, .btn-export:active { background: var(--blue); color: #fff; }
+  .entries-list { display: flex; flex-direction: column; gap: 8px; padding-bottom: 2rem; }
+  .entry-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.2rem; display: grid; grid-template-columns: 80px 1fr auto auto; align-items: center; gap: 12px; box-shadow: var(--shadow); animation: slideIn 0.2s ease; transition: border-color 0.15s; }
+  .entry-card:hover { border-color: rgba(96,165,250,0.3); }
+  @keyframes slideIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+  .entry-date-block { display: flex; flex-direction: column; }
+  .entry-day { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--blue); line-height: 1; }
+  .entry-weekday { font-size: 10px; color: var(--text3); text-transform: capitalize; font-weight: 600; }
+  .entry-times { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .time-badge { background: var(--blue-light); border-radius: 8px; padding: 5px 11px; font-family: 'DM Mono', monospace; font-size: 13px; color: var(--blue-dark); font-weight: 500; }
+  .time-arrow { color: var(--text3); font-size: 12px; }
+  .entry-note { font-size: 11px; color: var(--text3); margin-top: 3px; font-style: italic; }
+  .entry-duration { font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 500; color: var(--blue-dark); text-align: right; white-space: nowrap; }
+  .btn-del { background: none; border: none; cursor: pointer; color: var(--text3); padding: 8px; border-radius: 8px; display: flex; align-items: center; transition: background 0.1s, color 0.1s; touch-action: manipulation; }
+  .btn-del:hover, .btn-del:active { background: var(--danger-bg); color: var(--danger); }
+  .empty-state { text-align: center; padding: 3rem 1rem; color: var(--text3); }
+  .empty-icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+  .empty-state p { font-size: 14px; }
+
+  /* ── TOAST ── */
+  .toast { position: fixed; bottom: 1.5rem; right: 1.5rem; background: linear-gradient(135deg, var(--blue-dark), var(--teal-dark)); color: #fff; padding: 12px 18px; border-radius: var(--radius); font-size: 13px; font-weight: 600; box-shadow: var(--shadow-lg); transform: translateY(80px); opacity: 0; transition: all 0.25s ease; z-index: 100; max-width: 280px; }
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  /* ── CONGRATS ── */
+  .congrats-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 200; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; padding: 1rem; }
+  .congrats-overlay.show { opacity: 1; pointer-events: all; }
+  .congrats-card { background: linear-gradient(135deg, #DBEAFE, #EDE9FE, #CCFBF1); border-radius: 24px; padding: 2.5rem 2rem; text-align: center; max-width: 380px; width: 100%; box-shadow: 0 20px 60px rgba(30,80,160,0.25); transform: scale(0.85); transition: transform 0.4s ease; border: 1px solid rgba(96,165,250,0.3); }
+  .congrats-overlay.show .congrats-card { transform: scale(1); }
+  .congrats-emoji { font-size: 3rem; margin-bottom: 0.8rem; }
+  .congrats-title { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--blue-dark); margin-bottom: 0.5rem; }
+  .congrats-msg { font-size: 14px; color: var(--text2); margin-bottom: 1.5rem; line-height: 1.6; }
+  .congrats-close { background: linear-gradient(135deg, var(--blue), var(--teal)); color: #fff; border: none; padding: 12px 28px; border-radius: 99px; font-family: 'Nunito', sans-serif; font-size: 14px; font-weight: 700; cursor: pointer; touch-action: manipulation; }
+
+  /* ── RESPONSIVE ── */
+  /* iPad Pro 11" landscape ~1194px, portrait ~834px */
+  @media (min-width: 861px) and (max-width: 1194px) {
+    .app { grid-template-columns: 260px 1fr; }
+    .sidebar { height: 100vh; position: sticky; top: 0; flex-direction: column; }
+  }
+  @media (max-width: 860px) {
+    /* iPad portrait or smaller */
+    .app { grid-template-columns: 1fr; }
+    .sidebar { height: auto; position: static; flex-direction: row; flex-wrap: wrap; padding: 1.2rem 1rem; gap: 1rem; }
+    .logo-area { flex: 1; min-width: 160px; }
+    .schedule-chip { min-width: 160px; }
+    .sidebar-section { display: none; }
+    .sidebar-total { margin-top: 0; padding-top: 0; border-top: none; border-left: 1px solid rgba(30,58,92,0.15); padding-left: 1rem; min-width: 150px; }
+    .creator-credit { width: 100%; }
+    .main { padding: 1.5rem 1.2rem; }
+    .summary-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 620px) {
+    .sidebar { flex-direction: column; }
+    .sidebar-section { display: flex; }
+    .sidebar-total { border-left: none; padding-left: 0; border-top: 1px solid rgba(30,58,92,0.15); padding-top: 1rem; }
+    .form-row-1 { grid-template-columns: 1fr 1fr; }
+    .form-row-2 { grid-template-columns: 1fr; }
+    .btn-primary { width: 100%; }
+    .entry-card { grid-template-columns: 60px 1fr auto; }
+    .btn-del { grid-column: 3; grid-row: 1; }
+    .entry-duration { grid-column: 2; grid-row: 2; }
+    .welcome-banner { flex-direction: column; text-align: center; }
+  }
+  @media (max-width: 420px) {
+    .summary-grid { grid-template-columns: 1fr; }
+    .form-row-1 { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="congrats-overlay" id="congratsOverlay">
+  <div class="congrats-card">
+    <div class="congrats-emoji">🎓✨🎉</div>
+    <div class="congrats-title">¡Felicidades, Stephy!</div>
+    <div class="congrats-msg">Completaste tus prácticas profesionales en Intermoda. Todo el esfuerzo valió la pena. ¡Orgulloso de ti! 💙</div>
+    <button class="congrats-close" onclick="closeCongrats()">¡Gracias! ✨</button>
+  </div>
+</div>
+
+<div class="app">
+  <aside class="sidebar" role="navigation" aria-label="Navegación por mes">
+    <div class="logo-area">
+      <div class="logo-eyebrow">Bitácora de Prácticas</div>
+      <div class="logo-title">Prácticas Profesionales</div>
+      <div class="logo-company">Intermoda</div>
+      <div class="logo-name">Stephany Sofia<br/>Alanis Mendez</div>
+    </div>
+
+    <div class="welcome-chip">💼 ¡Bienvenida, practicante!</div>
+
+    <div class="schedule-chip">
+      <div class="schedule-label">Horario habitual</div>
+      <div class="schedule-time">10:00 am → 2:30 pm</div>
+      <div class="schedule-sub">4h 30min por día</div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Meses</div>
+      <div id="monthList"></div>
+    </div>
+
+    <div class="sidebar-total">
+      <div class="total-label">Total acumulado</div>
+      <div class="total-big" id="sidebarTotal">0<span style="font-size:1.1rem;opacity:.6">h</span></div>
+      <div class="total-pct" id="sidebarPct">0% completado</div>
+      <div class="total-sub" id="sidebarGoal">de 480h requeridas</div>
+      <div class="progress-outer"><div class="progress-inner" id="sidebarProg" style="width:0%"></div></div>
+      <div class="goal-row">
+        <label for="goalInput">Meta</label>
+        <input type="number" id="goalInput" min="1" max="9999" value="480" inputmode="numeric" />
+        <span style="font-size:11px;color:rgba(30,58,92,0.45)">h</span>
+      </div>
+    </div>
+
+    <div class="creator-credit">hecho con 💙 por Rolando Adrián Palacios Guzmán</div>
+  </aside>
+
+  <main class="main" role="main">
+    <div class="welcome-banner">
+      <div class="welcome-icon">💼</div>
+      <div class="welcome-text">
+        <div class="welcome-hi">¡Bienvenida, practicante!</div>
+        <div class="welcome-name">Stephany Sofia Alanis Mendez · Intermoda</div>
+      </div>
+    </div>
+
+    <div class="month-name" id="mainMonthName">—</div>
+    <div class="month-stats" id="mainMonthStats"></div>
+
+    <div class="summary-grid">
+      <div class="summary-card card-blue">
+        <div class="sc-label">Horas del mes</div>
+        <div class="sc-value" id="cardHorasMes">0<span class="sc-unit">h</span></div>
+        <div class="sc-sub" id="cardMinutos"></div>
+      </div>
+      <div class="summary-card card-coral">
+        <div class="sc-label">Días registrados</div>
+        <div class="sc-value" id="cardDias">0</div>
+        <div class="sc-sub" id="cardPromedio"></div>
+      </div>
+      <div class="summary-card card-teal">
+        <div class="sc-label">Avance total</div>
+        <div class="sc-value" id="cardPct">0<span class="sc-unit">%</span></div>
+        <div class="sc-sub" id="cardRestante"></div>
+      </div>
+      <div class="summary-card card-violet">
+        <div class="sc-label">Días estimados restantes</div>
+        <div class="sc-value" id="cardDiasRest">—</div>
+        <div class="sc-sub" id="cardDiasRestSub"></div>
+      </div>
+    </div>
+
+    <div class="minday-row">
+      <span class="minday-label">Mínimo por día:</span>
+      <input type="number" id="minHours" min="1" max="24" value="4" inputmode="numeric" />
+      <span class="minday-label">h</span>
+      <span class="minday-hint">· tu horario = 4h 30min</span>
+    </div>
+
+    <section class="add-section" aria-label="Agregar registro del día">
+      <h2>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        Agregar día
+      </h2>
+      <div class="quick-fill-row">
+        <span class="quick-label">Llenado rápido:</span>
+        <button class="quick-btn" onclick="quickFill()" type="button">⚡ Horario Intermoda (10am – 2:30pm)</button>
+      </div>
+      <div class="form-row-1">
+        <div class="form-field"><label for="inDate">Fecha</label><input type="date" id="inDate" /></div>
+        <div class="form-field"><label for="inEntry">Entrada</label><input type="time" id="inEntry" /></div>
+        <div class="form-field"><label for="inExit">Salida</label><input type="time" id="inExit" /></div>
+      </div>
+      <div class="form-row-2">
+        <div class="form-field"><label for="inNote">Actividad (opcional)</label><input type="text" id="inNote" placeholder="Diseño, inventario, showroom, atención a cliente…" maxlength="80" /></div>
+        <button class="btn-primary" onclick="addEntry()" type="button">Guardar 💙</button>
+      </div>
+      <div class="preview-badge" id="previewBadge"></div>
+    </section>
+
+    <div class="entries-header">
+      <div class="entries-title" id="entriesLabel">Registros</div>
+      <button class="btn-export" onclick="exportMonth()" type="button">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Exportar mes
+      </button>
+    </div>
+    <div class="entries-list" id="entriesList"></div>
+  </main>
+</div>
+
+<div class="toast" id="toast" role="alert" aria-live="polite"></div>
+
+<script>
+const MONTHS=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+const DAYS=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+let data={},currentKey='',goal=480,congratsShown=false;
+
+function loadData(){try{data=JSON.parse(localStorage.getItem('intermoda_v1')||'{}');goal=parseInt(localStorage.getItem('intermoda_goal')||'480',10);document.getElementById('goalInput').value=goal;congratsShown=localStorage.getItem('intermoda_congrats')==='1';}catch(e){data={};}}
+function saveData(){try{localStorage.setItem('intermoda_v1',JSON.stringify(data));}catch(e){}}
+function timeToMin(t){if(!t)return 0;const[h,m]=t.split(':').map(Number);return h*60+m;}
+function minToStr(m){const h=Math.floor(Math.abs(m)/60),min=Math.abs(m)%60;return min===0?`${h}h`:`${h}h ${min}min`;}
+function getKey(date){const d=new Date(date+'T00:00:00');return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;}
+function keyToLabel(k){const[y,m]=k.split('-');return`${MONTHS[parseInt(m)-1]} ${y}`;}
+function fmtTime(t){if(!t)return'';const[h,m]=t.split(':').map(Number);const s=h<12?'am':'pm';const h12=h===0?12:h>12?h-12:h;return`${h12}:${String(m).padStart(2,'0')} ${s}`;}
+function allKeys(){const keys=new Set(Object.keys(data).map(d=>getKey(d)));const now=new Date();keys.add(`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`);return[...keys].sort().reverse();}
+function monthEntries(key){return Object.entries(data).filter(([d])=>getKey(d)===key).sort(([a],[b])=>a.localeCompare(b));}
+function entryMins(e){return timeToMin(e.exit)-timeToMin(e.entry);}
+function monthMinutes(key){return monthEntries(key).reduce((acc,[,e])=>acc+entryMins(e),0);}
+function totalMinutes(){return Object.values(data).reduce((acc,e)=>acc+entryMins(e),0);}
+
+function renderSidebar(){
+  const keys=allKeys();const list=document.getElementById('monthList');list.innerHTML='';
+  keys.forEach(k=>{const entries=monthEntries(k);const btn=document.createElement('button');btn.className='month-btn'+(k===currentKey?' active':'');btn.innerHTML=`${keyToLabel(k)}<span class="pill">${entries.length}d</span>`;btn.onclick=()=>{currentKey=k;renderAll();};list.appendChild(btn);});
+  const total=totalMinutes();const pct=Math.min(100,(total/(goal*60))*100);
+  document.getElementById('sidebarTotal').innerHTML=`${Math.floor(total/60)}<span style="font-size:1.1rem;opacity:.6">h</span>`;
+  document.getElementById('sidebarPct').textContent=`${pct.toFixed(1)}% completado`;
+  document.getElementById('sidebarGoal').textContent=`de ${goal}h requeridas`;
+  document.getElementById('sidebarProg').style.width=pct.toFixed(1)+'%';
+}
+
+function renderMain(){
+  const entries=monthEntries(currentKey);const mins=monthMinutes(currentKey);const total=totalMinutes();
+  const totalPct=goal>0?Math.min(100,(total/(goal*60))*100):0;
+  const minH=parseInt(document.getElementById('minHours').value,10)||4;
+  document.getElementById('mainMonthName').textContent=keyToLabel(currentKey);
+  document.getElementById('mainMonthStats').innerHTML=`<span class="stat-chip"><strong>${entries.length}</strong> días registrados</span><span class="stat-chip"><strong>${minToStr(mins)}</strong> este mes</span>`;
+  const h=Math.floor(mins/60),min=mins%60;
+  document.getElementById('cardHorasMes').innerHTML=`${h}<span class="sc-unit">h ${min>0?min+'min':''}</span>`;
+  document.getElementById('cardMinutos').textContent=`${mins} minutos totales`;
+  document.getElementById('cardDias').textContent=entries.length;
+  const avg=entries.length?Math.round(mins/entries.length):0;
+  document.getElementById('cardPromedio').textContent=entries.length?`~${minToStr(avg)} por día`:'Sin registros';
+  document.getElementById('cardPct').innerHTML=`${totalPct.toFixed(1)}<span class="sc-unit">%</span>`;
+  const restMin=Math.max(0,goal*60-total);
+  document.getElementById('cardRestante').textContent=restMin>0?`Faltan ${minToStr(restMin)}`:'¡Meta alcanzada! 🎓';
+  const restCard=document.getElementById('cardDiasRest');const restSub=document.getElementById('cardDiasRestSub');
+  if(restMin<=0){restCard.textContent='0';restSub.textContent='¡Meta alcanzada! 💙';}
+  else{const d=Math.ceil(restMin/(minH*60));restCard.innerHTML=`${d}<span class="sc-unit" style="font-size:1rem">días</span>`;restSub.textContent=`con mín. ${minH}h/día · faltan ${minToStr(restMin)}`;}
+  if(restMin<=0&&!congratsShown){setTimeout(()=>{document.getElementById('congratsOverlay').classList.add('show');congratsShown=true;localStorage.setItem('intermoda_congrats','1');},600);}
+  document.getElementById('entriesLabel').textContent=`Registros — ${keyToLabel(currentKey)}`;
+  const listEl=document.getElementById('entriesList');
+  if(!entries.length){listEl.innerHTML=`<div class="empty-state"><div class="empty-icon">💼</div><p>Sin registros en ${keyToLabel(currentKey)}.<br/>Usa el llenado rápido o agrega tu primer día.</p></div>`;return;}
+  listEl.innerHTML='';
+  entries.forEach(([date,e])=>{
+    const d=new Date(date+'T00:00:00');const effMins=entryMins(e);
+    const card=document.createElement('div');card.className='entry-card';
+    card.innerHTML=`<div class="entry-date-block"><div class="entry-day">${d.getDate()}</div><div class="entry-weekday">${DAYS[d.getDay()]}</div></div><div><div class="entry-times"><span class="time-badge">${fmtTime(e.entry)}</span><span class="time-arrow">→</span><span class="time-badge">${fmtTime(e.exit)}</span></div>${e.note?`<div class="entry-note">${escHtml(e.note)}</div>`:''}</div><div class="entry-duration">${minToStr(effMins)}</div><button class="btn-del" onclick="deleteEntry('${date}')" aria-label="Eliminar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></button>`;
+    listEl.appendChild(card);
+  });
+}
+
+function renderAll(){renderSidebar();renderMain();}
+
+function quickFill(){document.getElementById('inEntry').value='10:00';document.getElementById('inExit').value='14:30';updatePreview();showToast('⚡ Horario Intermoda cargado');}
+function addEntry(){
+  const date=document.getElementById('inDate').value,entry=document.getElementById('inEntry').value,exit=document.getElementById('inExit').value,note=document.getElementById('inNote').value.trim();
+  if(!date||!entry||!exit){showToast('Completa fecha, entrada y salida');return;}
+  if(timeToMin(exit)-timeToMin(entry)<=0){showToast('La salida debe ser después de la entrada');return;}
+  if(data[date]&&!confirm('Ya existe un registro para esta fecha. ¿Reemplazarlo?'))return;
+  data[date]={entry,exit,note};saveData();currentKey=getKey(date);
+  document.getElementById('inEntry').value='';document.getElementById('inExit').value='';document.getElementById('inNote').value='';document.getElementById('previewBadge').textContent='';
+  showToast(`💙 ${minToStr(timeToMin(exit)-timeToMin(entry))} registradas`);renderAll();
+}
+function deleteEntry(date){const d=new Date(date+'T00:00:00');if(!confirm(`¿Eliminar el registro del ${d.getDate()} de ${MONTHS[d.getMonth()]}?`))return;delete data[date];saveData();renderAll();showToast('Registro eliminado');}
+function updatePreview(){const entry=document.getElementById('inEntry').value,exit=document.getElementById('inExit').value;if(!entry||!exit){document.getElementById('previewBadge').textContent='';return;}const raw=timeToMin(exit)-timeToMin(entry);document.getElementById('previewBadge').textContent=raw>0?`= ${minToStr(raw)} este día`:''; }
+function closeCongrats(){document.getElementById('congratsOverlay').classList.remove('show');}
+function exportMonth(){
+  const entries=monthEntries(currentKey);if(!entries.length){showToast('No hay registros para exportar');return;}
+  let txt=`PRÁCTICAS PROFESIONALES — ${keyToLabel(currentKey).toUpperCase()}\nStephany Sofia Alanis Mendez · Intermoda\n${'═'.repeat(45)}\n\n`;let total=0;
+  entries.forEach(([date,e])=>{const d=new Date(date+'T00:00:00'),eff=entryMins(e);total+=eff;txt+=`${String(d.getDate()).padStart(2,'0')} ${MONTHS[d.getMonth()]} (${DAYS[d.getDay()]})\n   Entrada: ${fmtTime(e.entry)}   Salida: ${fmtTime(e.exit)}   Duración: ${minToStr(eff)}`;if(e.note)txt+=`\n   Actividad: ${e.note}`;txt+='\n\n';});
+  txt+=`${'─'.repeat(45)}\nTotal del mes:   ${minToStr(total)}\nTotal acumulado: ${minToStr(totalMinutes())}\nMeta: ${goal}h — Avance: ${Math.min(100,(totalMinutes()/(goal*60))*100).toFixed(1)}%\n`;
+  const blob=new Blob([txt],{type:'text/plain;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`practicas_intermoda_${currentKey}.txt`;a.click();showToast('Exportado correctamente 💙');
+}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
+function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+loadData();
+const now=new Date();
+currentKey=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
+document.getElementById('inDate').value=now.toISOString().slice(0,10);
+['inEntry','inExit'].forEach(id=>document.getElementById(id).addEventListener('input',updatePreview));
+document.getElementById('goalInput').addEventListener('input',function(){goal=parseInt(this.value,10)||480;localStorage.setItem('intermoda_goal',goal);renderAll();});
+document.getElementById('minHours').addEventListener('input',()=>renderAll());
+renderAll();
+
+// Registrar Service Worker para PWA
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .catch(err => console.log('SW error:', err));
+  });
+}
+</script>
+</body>
+</html>
